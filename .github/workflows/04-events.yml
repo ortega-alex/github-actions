@@ -28,12 +28,13 @@ jobs:
               if: github.event_name == 'issues' && github.event.action == 'opened'
               env:
                   AUTHOR_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+                  GITHUB_REPOSITORY: ${{ github.repository }}
                   ISSUE_NUMBER: ${{ github.event.issue.number }}
               run: |
                 if [[ -z "$AUTHOR_TOKEN" ]]; then
-                  echo "::Warning:: No hay PERSONAL_ACCESS_TOKEN configurado. Se omite el comentario como autor del repositorio."
+                  echo "::warning:: No hay PERSONAL_ACCESS_TOKEN configurado. Se omite el comentario como autor del repositorio."
                   exit 0
                 fi
                 GH_TOKEN=$AUTHOR_TOKEN" gh issue comment $ISSUE_NUMBER" \
                   --repo "$GITHUB_REPOSITORY" \
-                  --body "Hola, soy el dueño del repositorio respondiendo personalmente. Mirate la guía de contribución para más información."
+                  --body "Hola, soy el dueño del repositorio respondiendo personalmente. Mírate la guía de contribución mientras tanto."
