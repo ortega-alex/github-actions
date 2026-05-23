@@ -25,7 +25,7 @@ jobs:
                 gh issue comment $ISSUE_NUMBER --body "Gracias por tu aporte. Nos pondremos en contacto contigo pronto." --repo "$GITHUB_REPOSITORY"
             
             - name: Comentario como author del repositorio
-              if: github.event_name == 'issue_comment' && github.event.issue.pull_request
+              if: github.event_name == 'issues' && github.event.action == 'opened'
               env:
                   AUTHOR_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                   ISSUE_NUMBER: ${{ github.event.issue.number }}
