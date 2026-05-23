@@ -12,3 +12,10 @@ jobs:
               run: date
             - name: Ver archivos disponibles
               run: ls -la
+    repo-file:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Descargar el codigo del repositorio
+              uses: actions/checkout@v6
+            - name: Ver archivos disponibles
+              run: ls -la
