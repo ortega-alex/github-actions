@@ -1,0 +1,15 @@
+name: 04 - Events
+on:
+    issues:
+        types: [opened, reopened]
+    issue_comment:
+        types: [created]
+jobs:
+    inspect-event:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Inspectar evento
+              run: |
+                  echo "Evento: ${{ github.event_name }}"
+                  echo "Issue: ${{ github.event.issue.title }}"
+                  echo "Comment: ${{ github.event.comment.body }}"
