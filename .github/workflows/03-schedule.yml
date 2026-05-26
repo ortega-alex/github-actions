@@ -1,7 +1,8 @@
 name: 03 - Schedule
 on: 
-    schedule:
-        - cron: '0 9 * * MON' 
+    # schedule:
+    #     - cron: '0 9 * * MON' 
+    workflow_dispatch:
 jobs: 
     schedule:
         runs-on: ubuntu-22.04
