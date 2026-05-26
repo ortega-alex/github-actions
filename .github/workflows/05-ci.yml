@@ -19,18 +19,6 @@ jobs:
 
             - name: Lint
               run: pnpm --filter apps/web lint
-    
-    backend-lint:
-        runs-on: ubuntu-22.04
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v6
-
-            - name: Setup pnpm and Node.js
-              uses: ./.github/actions/setup-pnpm-ci-cd
-
-            - name: Lint
-              run: pnpm --filter apps/api lint
 
     frontend-test:
         runs-on: ubuntu-22.04
@@ -43,6 +31,31 @@ jobs:
 
             - name: Test
               run: pnpm --filter apps/web test
+
+    frontend-build:
+        needs: [frontend-lint, frontend-test] ## depende de los tests y linting
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
+            - name: Setup pnpm and Node.js
+              uses: ./.github/actions/setup-pnpm-ci-cd
+
+            - name: Build
+              run: pnpm --filter apps/web build
+    
+    backend-lint:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
+            - name: Setup pnpm and Node.js
+              uses: ./.github/actions/setup-pnpm-ci-cd
+
+            - name: Lint
+              run: pnpm --filter apps/api lint
     
     backend-test:
         runs-on: ubuntu-22.04
@@ -56,24 +69,13 @@ jobs:
             - name: Test
               run: pnpm --filter apps/api test
 
-    frontend-build:
-        runs-on: ubuntu-22.04
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v6
-
-            - name: Setup pnpm and Node.js
-              uses: ./.github/actions/setup-pnpm-ci-cd
-
-            - name: Build
-              run: pnpm --filter apps/web build
-    
     backend-build:
+        needs: [backend-lint, backend-test] ## depende de los tests y linting
         runs-on: ubuntu-22.04
         steps:
             - name: Checkout code
               uses: actions/checkout@v6
-              
+
             - name: Setup pnpm and Node.js
               uses: ./.github/actions/setup-pnpm-ci-cd
 
