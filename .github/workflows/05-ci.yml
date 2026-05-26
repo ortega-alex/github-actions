@@ -7,28 +7,84 @@ on:
         branches:
             - main
 jobs:
-    build:
+    ### flujo en paralelo
+    frontend-lint:
         runs-on: ubuntu-22.04
-        steps: 
-            - name: Checkout code
-              uses: actions/checkout@v6
-            
-            - name: Setup pnpm
-              uses: pnpm/action-setup@v6
-              with:
-                  version: 11.2.2
-                  run_install: false
-
-           
-            - name: Install dependencies
-              run: pnpm install --frozen-lockfile ## pnpm ya hace el --frozen-lockfile
+        steps:
+            - name: Setup pnpm and Node.js
+              uses: ./.github/actions/setup-pnpm-ci-cd@main
 
             - name: Lint
-              run: pnpm lint
+              run: pnpm --filter apps/web lint
+    
+    backend-lint:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Setup pnpm and Node.js
+              uses: ./.github/actions/setup-pnpm-ci-cd@main
+
+            - name: Lint
+              run: pnpm --filter apps/api lint
+
+    frontend-test:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Setup pnpm and Node.js
+              uses: ./.github/actions/setup-pnpm-ci-cd@main
 
             - name: Test
-              run: pnpm test
+              run: pnpm --filter apps/web test
+    
+    backend-test:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Setup pnpm and Node.js
+              uses: ./.github/actions/setup-pnpm-ci-cd@main
+
+            - name: Test
+              run: pnpm --filter apps/api test
+
+    frontend-build:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Setup pnpm and Node.js
+              uses: ./.github/actions/setup-pnpm-ci-cd@main
 
             - name: Build
-              run: pnpm build
+              run: pnpm --filter apps/web build
+    
+    backend-build:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Setup pnpm and Node.js
+              uses: ./.github/actions/setup-pnpm-ci-cd@main
+
+            - name: Build
+              run: pnpm --filter apps/api build
+
+    ### flujo en secuencia
+    # build:
+    #     runs-on: ubuntu-22.04
+    #     steps: 
+    #         - name: Checkout code
+    #           uses: actions/checkout@v6
+            
+    #         - name: Setup pnpm
+    #           uses: pnpm/action-setup@v6
+    #           with:
+    #               version: 11.2.2
+    #               run_install: false
+
+           
+    #         - name: Install dependencies
+    #           run: pnpm install --frozen-lockfile ## pnpm ya hace el --frozen-lockfile
+
+    #         - name: Lint
+    #           run: pnpm lint
+
+    #         - name: Test
+    #           run: pnpm test
+
+    #         - name: Build
+    #           run: pnpm build
 
