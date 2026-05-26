@@ -11,8 +11,11 @@ jobs:
     frontend-lint:
         runs-on: ubuntu-22.04
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
             - name: Setup pnpm and Node.js
-              uses: ./.github/actions/setup-pnpm-ci-cd@main
+              uses: ./.github/actions/setup-pnpm-ci-cd
 
             - name: Lint
               run: pnpm --filter apps/web lint
@@ -20,8 +23,11 @@ jobs:
     backend-lint:
         runs-on: ubuntu-22.04
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
             - name: Setup pnpm and Node.js
-              uses: ./.github/actions/setup-pnpm-ci-cd@main
+              uses: ./.github/actions/setup-pnpm-ci-cd
 
             - name: Lint
               run: pnpm --filter apps/api lint
@@ -29,8 +35,11 @@ jobs:
     frontend-test:
         runs-on: ubuntu-22.04
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
             - name: Setup pnpm and Node.js
-              uses: ./.github/actions/setup-pnpm-ci-cd@main
+              uses: ./.github/actions/setup-pnpm-ci-cd
 
             - name: Test
               run: pnpm --filter apps/web test
@@ -38,8 +47,11 @@ jobs:
     backend-test:
         runs-on: ubuntu-22.04
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
             - name: Setup pnpm and Node.js
-              uses: ./.github/actions/setup-pnpm-ci-cd@main
+              uses: ./.github/actions/setup-pnpm-ci-cd
 
             - name: Test
               run: pnpm --filter apps/api test
@@ -47,8 +59,11 @@ jobs:
     frontend-build:
         runs-on: ubuntu-22.04
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
             - name: Setup pnpm and Node.js
-              uses: ./.github/actions/setup-pnpm-ci-cd@main
+              uses: ./.github/actions/setup-pnpm-ci-cd
 
             - name: Build
               run: pnpm --filter apps/web build
@@ -56,8 +71,11 @@ jobs:
     backend-build:
         runs-on: ubuntu-22.04
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+              
             - name: Setup pnpm and Node.js
-              uses: ./.github/actions/setup-pnpm-ci-cd@main
+              uses: ./.github/actions/setup-pnpm-ci-cd
 
             - name: Build
               run: pnpm --filter apps/api build
